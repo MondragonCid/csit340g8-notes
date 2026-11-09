@@ -1,9 +1,13 @@
-
+import Notes from './components/Notes.jsx'
+import Info from './components/Info.jsx'
+ 
 function App() {
-
   return (
-    <li>hello</li>
+    <div className="bg-[#f5f5f5] font-light text-[#111]">
+      <Notes />
+      <Info name="YOUR NAME" />
+    </div>
   )
 }
-
+ 
 export default App

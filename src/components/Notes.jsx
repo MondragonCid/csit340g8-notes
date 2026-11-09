@@ -1,8 +1,7 @@
-import { useState } from 'react' 
+import { useState } from 'react'
 import NoteCard from './NoteCard.jsx'
 
 function Notes() {
-
   const [notes, setNotes] = useState([
     {
       id: '1',
@@ -29,6 +28,24 @@ function Notes() {
     }))
   }
 
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const trimmedTitle = formInput.title.trim()
+    const trimmedBody = formInput.body.trim()
+
+    if (!trimmedTitle || !trimmedBody) return
+
+    const newNote = {
+      id: Date.now().toString(),
+      title: trimmedTitle,
+      body: trimmedBody,
+    }
+
+    setNotes((prevNotes) => [...prevNotes, newNote])
+    setFormInput({ title: '', body: '' })
+  }
+
   return (
     <div className="grid min-h-screen grid-cols-[420px_1fr]">
         <aside className="sticky top-0 flex h-screen flex-col gap-5 bg-white px-8 py-9 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]">
@@ -44,16 +61,21 @@ function Notes() {
           />
         </div>
 
-        <form className="grid gap-3">
+        {}
+        <form onSubmit={handleSubmit} className="grid gap-3">
           <p className="text-[13px] font-normal tracking-wide text-[#949494]">NEW NOTE</p>
           <input
             name="title"
+            value={formInput.title}
+            onChange={handleInputChange}
             placeholder="Title"
             className="h-[52px] w-full border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
           />
 
           <textarea
             name="body"
+            value={formInput.body}
+            onChange={handleInputChange}
             placeholder="Write your note"
             className="h-[120px] w-full resize-none py-3 border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
           />
@@ -71,7 +93,6 @@ function Notes() {
       <section className="px-12 py-11">
         <h2 className="mb-6 text-3xl">All notes</h2>
 
-        {/* 3. Map over the notes array to dynamically render list items */}
         <ul className="grid grid-cols-3 items-start gap-5">
           {notes.map((note) => (
             <li 

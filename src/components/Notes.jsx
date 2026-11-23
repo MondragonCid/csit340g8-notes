@@ -20,10 +20,10 @@ function Notes() {
     return saved ? JSON.parse(saved) : startingNotes
   })
 
-  const [formInput, setFormInput] = useState({
-    title: '',
-    body: '',
-  })  
+  const [formInput, setFormInput] = useState(() => {
+    const saved = localStorage.getItem('draft')
+    return saved ? JSON.parse(saved) : { title: '', body: '' }
+  })
 
   const [searchQuery, setSearchQuery] = useState('')
   //const titleref checkpoint

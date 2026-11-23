@@ -27,10 +27,20 @@ function Notes() {
 
   const [searchQuery, setSearchQuery] = useState('')
 
+  //handles saving notes to local storage 
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
   }, [notes])
   
+  //handles draft saved thingy
+  useEffect(() => {
+    const id = setTimeout(() => {
+      localStorage.setItem('draft', JSON.stringify(formInput))
+      console.log('draft saved:', formInput.title)
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [formInput])
+
   function handleInputChange(e) {
     const { name, value } = e.target
     setFormInput((prev) => ({

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect , useRef } from 'react'
 import NoteCard from './NoteCard.jsx'
 
 const startingNotes = [
@@ -23,10 +23,11 @@ function Notes() {
   const [formInput, setFormInput] = useState({
     title: '',
     body: '',
-  })
+  })  
 
   const [searchQuery, setSearchQuery] = useState('')
-
+  //const titleref checkpoint
+  const titleRef = useRef(null)
   //handles saving notes to local storage 
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
@@ -65,6 +66,8 @@ function Notes() {
 
     setNotes((prevNotes) => [...prevNotes, newNote])
     setFormInput({ title: '', body: '' })
+    //focus titleref checkpoint
+    titleRef.current.focus()
   }
 
   function deleteNote(id) {
@@ -97,6 +100,7 @@ function Notes() {
         <form onSubmit={handleSubmit} className="grid gap-3">
           <p className="text-[13px] font-normal tracking-wide text-[#949494]">NEW NOTE</p>
           <input
+            ref={titleRef}
             name="title"
             value={formInput.title}
             onChange={handleInputChange}
